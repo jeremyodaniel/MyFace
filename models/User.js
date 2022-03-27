@@ -15,18 +15,32 @@ const UserSchema = new Schema(
       required: true,
       match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]
     },
-    thoughts: {
-      // Array of _id values referencing the Thought model
-    },
-    friends: {
-      // Array of _id values referencing the User model (self-reference)
-    }
-
-    
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
+      }
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Friend'
+      }
+    ],    
   }
 );
 
+// Schema Settings
+// 
+// Create a virtual called friendCount that retrieves the length of the
+//  user's friends array field on query.
+UserSchema.virtual('friendCount').get(function() {
+  return this.friends.length;
+});
 
-/* SCHEMA SETTINGS
-Create a virtual called friendCount that retrieves the length of the 
-user's friends array field on query. */
+const User = model('User', UserSchema);
+
+module.exports = User;
+
+
+
