@@ -92,10 +92,25 @@ const thoughtController = {
       });
   },
   
+  // getThoughtById
+  getThoughtById({ params }, res) {
+    Thought.findOne({ _id: params.thoughtId })
+      .populate({
+        path: 'reactions',
+        select: '-__v'
+      })
+      .select('-__v')
+      .then(dbThoughtData => res.json(dbThoughtData))
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+
 };
 
 
 
-// getThoughtById
+
 // updateThought
 module.exports = thoughtController;

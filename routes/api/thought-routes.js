@@ -20,6 +20,13 @@ router
   .route('/')
   .get(getAllThoughts);
 
+// GET one thought by id at /api/thoughts/id
+router
+  .route('/:thoughtId')
+  .get(getThoughtById);
+
+  
+
 // /api/thoughts/<userId>/<thoughtId>
 router
   .route('/:UserId/:thoughtId')
