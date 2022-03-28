@@ -20,12 +20,14 @@ router
   .route('/')
   .get(getAllThoughts);
 
-// GET one thought by id at /api/thoughts/id
+// GET, UPDATE, & DELETE one thought by id at /api/thoughts/id
 router
   .route('/:thoughtId')
-  .get(getThoughtById);
+  .get(getThoughtById)
+  .put(updateThought)
+  .delete(removeThought);
 
-  
+
 
 // /api/thoughts/<userId>/<thoughtId>
 router
