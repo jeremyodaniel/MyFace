@@ -5,7 +5,7 @@ const thoughtController = {
 //  thought's _id to the associated user's thoughts array field)
   
   // add thought to user
-  addThought({ params, body }, res) {
+  createThought({ params, body }, res) {
    // console.log(body);
     Thought.create(body)
       .then(({ _id }) => {
@@ -26,7 +26,7 @@ const thoughtController = {
   },
 
   // add reaction to thought
-  addReaction({ params, body }, res) {
+  createReaction({ params, body }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
       { $push: { replies: body } },
@@ -74,7 +74,28 @@ const thoughtController = {
     )
       .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err));
-  }  
+  },
+
+  // get All Thoughts
+  getAllThoughts(req, res) {
+    Thought.find({})
+      .populate({
+        path: 'reactions',
+        select: '-__v'
+      })
+      .select('-__v')
+      .sort({ _id: -1 })
+      .then(dbThoughtData => res.json(dbThoughtData))
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  },
+  
 };
 
+
+
+// getThoughtById
+// updateThought
 module.exports = thoughtController;
