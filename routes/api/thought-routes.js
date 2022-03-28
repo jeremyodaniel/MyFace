@@ -27,16 +27,16 @@ router
   .put(updateThought)
   .delete(removeThought);
 
-
-
-// /api/thoughts/<userId>/<thoughtId>
+// /api/thoughts/<thoughtId>/reactions
 router
-  .route('/:UserId/:thoughtId')
+  .route('/:thoughtId/reactions')
   .put(createReaction)
-  .delete(removeThought);
+  //.delete(removeThought);
 
-// /api/thought/userId/thoughtId/reactionId  
-router.route('/:userId/:thoughtId/:reactionId').delete(removeReaction);
+// /api/thoughts/thoughtId/reactions/reactionId  
+router
+  .route('/:thoughtId/reactions/:reactionId')
+  .delete(removeReaction);
 
 
 module.exports = router;
